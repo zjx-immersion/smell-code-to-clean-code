@@ -7,9 +7,13 @@ import static java.util.stream.Collectors.joining;
  * Created by jxzhong on 2018/5/22.
  */
 public class WordFrequencyGame {
+
+    private final String wordStrSplitRegex = "\\s+";
+    private String formatJoinSymbol;
+
     public String play(String inputStr) {
 
-        String[] wordStrList = inputStr.split("\\s+");
+        String[] wordStrList = inputStr.split(wordStrSplitRegex);
 
         List<Word> wordList = buildWordList(wordStrList);
 
@@ -25,8 +29,10 @@ public class WordFrequencyGame {
 
     private String formatWordReport(List<Word> wordList) {
 
+        formatJoinSymbol = "\n";
         return wordList.stream()
-                .map( word -> word.getValue() + " " + word.getWordCount()).collect(joining("\n"));
+                .map(word -> String.format("%s %d", word.getValue(), word.getWordCount()))
+                .collect(joining(formatJoinSymbol));
     }
 
     private void sortWords(List<Word> wordList) {
