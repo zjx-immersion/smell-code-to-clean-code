@@ -5,9 +5,9 @@ public class Word {
     private String value;
     private int count;
 
-    public Word(String w, int i) {
-        this.value = w;
-        this.count = i;
+    public Word(String word, int count) {
+        this.value = word;
+        this.count = count;
     }
 
     public String getValue() {

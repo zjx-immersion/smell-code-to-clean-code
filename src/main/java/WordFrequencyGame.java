@@ -13,11 +13,9 @@ public class WordFrequencyGame {
 
     public String play(String inputStr) {
 
-        String[] wordStrList = inputStr.split(wordStrSplitRegex);
+        List<String> wordStrList = Arrays.stream(inputStr.split(wordStrSplitRegex)).collect(Collectors.toList());
 
-        List<Word> wordList = buildWordList(wordStrList);
-
-        wordList = caculateWordsCount(wordList);
+        List<Word> wordList = caculateWordsCount(wordStrList);
 
         sortWords(wordList);
 
@@ -39,10 +37,10 @@ public class WordFrequencyGame {
         wordList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
     }
 
-    private List<Word> caculateWordsCount(List<Word> wordList) {
+    private List<Word> caculateWordsCount(List<String> wordStrList) {
 
-        return wordList.stream()
-                .collect(Collectors.groupingBy(Word::getValue))
+        return wordStrList.stream()
+                .collect(Collectors.groupingBy(wordStr -> wordStr))
                 .entrySet().stream()
                 .map(entry -> new Word(entry.getKey(), entry.getValue().size()))
                 .collect(Collectors.toList());
