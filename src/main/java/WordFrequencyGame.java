@@ -9,12 +9,14 @@ public class WordFrequencyGame {
         String[] wordStrList = inputStr.split("\\s+");
 
         List<Word> wordList = buildWordList(wordStrList);
+
         wordList = caculateWordsCount(wordList);
 
         sortWords(wordList);
 
-        StringJoiner joiner = formatWordsOutput(wordList);
-        return joiner.toString();
+        String wordsReport = formatWordsOutput(wordList).toString();
+        
+        return wordsReport;
 
     }
 
