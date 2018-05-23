@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by jxzhong on 2018/5/22.
@@ -15,7 +16,7 @@ public class WordFrequencyGame {
         sortWords(wordList);
 
         String wordsReport = formatWordsOutput(wordList).toString();
-        
+
         return wordsReport;
 
     }
@@ -34,19 +35,12 @@ public class WordFrequencyGame {
     }
 
     private List<Word> caculateWordsCount(List<Word> wordList) {
-        Map<String, List<Word>> map = new HashMap<>();
-        for (Word word : wordList) {
-            map.computeIfAbsent(word.getValue(), k -> new ArrayList<>()).add(word);
-        }
-        Map<String, List<Word>> wordMap = map;
 
-        List<Word> list = new ArrayList<>();
-        for (Map.Entry<String, List<Word>> entry : wordMap.entrySet()) {
-            Word word = new Word(entry.getKey(), entry.getValue().size());
-            list.add(word);
-        }
-        wordList = list;
-        return wordList;
+        return wordList.stream()
+                .collect(Collectors.groupingBy(Word::getValue))
+                .entrySet().stream()
+                .map(entry -> new Word(entry.getKey(), entry.getValue().size()))
+                .collect(Collectors.toList());
     }
 
     private List<Word> buildWordList(String[] wordStrList) {
