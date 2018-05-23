@@ -15,13 +15,18 @@ public class WordFrequencyGame {
 
         wordList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
+        StringJoiner joiner = formatWordsOutput(wordList);
+        return joiner.toString();
+
+    }
+
+    private StringJoiner formatWordsOutput(List<Input> wordList) {
         StringJoiner joiner = new StringJoiner("\n");
         for (Input w : wordList) {
             String s = w.getValue() + " " + w.getWordCount();
             joiner.add(s);
         }
-        return joiner.toString();
-
+        return joiner;
     }
 
     private List<Input> caculateWordsCount(List<Input> wordList) {
