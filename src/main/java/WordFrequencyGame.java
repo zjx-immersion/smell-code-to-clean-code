@@ -9,15 +9,15 @@ import static java.util.stream.Collectors.joining;
 public class WordFrequencyGame {
 
     private final String wordStrSplitRegex = "\\s+";
-    private String formatJoinSymbol;
+    private final String formatJoinSymbol = "\n";
 
     public String play(String inputStr) {
 
-        List<String> wordStrList = Arrays.stream(inputStr.split(wordStrSplitRegex)).collect(Collectors.toList());
+        List<String> wordStrList = formatTheInputs(inputStr);
 
         List<Word> wordList = caculateWordsCount(wordStrList);
 
-        sortWords(wordList);
+        wordList = sortWords(wordList);
 
         String wordsReport = formatWordReport(wordList);
 
@@ -25,16 +25,20 @@ public class WordFrequencyGame {
 
     }
 
+    private List<String> formatTheInputs(String inputStr) {
+        return Arrays.stream(inputStr.split(wordStrSplitRegex)).collect(Collectors.toList());
+    }
+
     private String formatWordReport(List<Word> wordList) {
 
-        formatJoinSymbol = "\n";
         return wordList.stream()
                 .map(word -> String.format("%s %d", word.getValue(), word.getWordCount()))
                 .collect(joining(formatJoinSymbol));
     }
 
-    private void sortWords(List<Word> wordList) {
-        wordList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+    private List<Word> sortWords(List<Word> wordList) {
+        return wordList.stream().sorted(((w1, w2) -> w2.getWordCount() - w1.getWordCount()))
+                .collect(Collectors.toList());
     }
 
     private List<Word> caculateWordsCount(List<String> wordStrList) {
