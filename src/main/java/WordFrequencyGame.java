@@ -6,58 +6,52 @@ import java.util.*;
 public class WordFrequencyGame {
     public String play(String inputStr) {
 
-        //split the input string with 1 to n pieces of spaces
         String[] wordStrList = inputStr.split("\\s+");
 
-        List<Input> wordList = buildWordList(wordStrList);
+        List<Word> wordList = buildWordList(wordStrList);
         wordList = caculateWordsCount(wordList);
 
-
-        wordList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+        sortWords(wordList);
 
         StringJoiner joiner = formatWordsOutput(wordList);
         return joiner.toString();
 
     }
 
-    private StringJoiner formatWordsOutput(List<Input> wordList) {
+    private void sortWords(List<Word> wordList) {
+        wordList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
+    }
+
+    private StringJoiner formatWordsOutput(List<Word> wordList) {
         StringJoiner joiner = new StringJoiner("\n");
-        for (Input w : wordList) {
+        for (Word w : wordList) {
             String s = w.getValue() + " " + w.getWordCount();
             joiner.add(s);
         }
         return joiner;
     }
 
-    private List<Input> caculateWordsCount(List<Input> wordList) {
-        //get the map for the next step of sizing the same word
-        Map<String, List<Input>> map = new HashMap<>();
-        for (Input input1 : wordList) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
-            if (!map.containsKey(input1.getValue())) {
-                ArrayList arr = new ArrayList<>();
-                arr.add(input1);
-                map.put(input1.getValue(), arr);
-            } else {
-                map.get(input1.getValue()).add(input1);
-            }
+    private List<Word> caculateWordsCount(List<Word> wordList) {
+        Map<String, List<Word>> map = new HashMap<>();
+        for (Word word : wordList) {
+            map.computeIfAbsent(word.getValue(), k -> new ArrayList<>()).add(word);
         }
-        Map<String, List<Input>> wordMap = map;
+        Map<String, List<Word>> wordMap = map;
 
-        List<Input> list = new ArrayList<>();
-        for (Map.Entry<String, List<Input>> entry : wordMap.entrySet()) {
-            Input input = new Input(entry.getKey(), entry.getValue().size());
-            list.add(input);
+        List<Word> list = new ArrayList<>();
+        for (Map.Entry<String, List<Word>> entry : wordMap.entrySet()) {
+            Word word = new Word(entry.getKey(), entry.getValue().size());
+            list.add(word);
         }
         wordList = list;
         return wordList;
     }
 
-    private List<Input> buildWordList(String[] wordStrList) {
-        List<Input> wordList = new ArrayList<>();
+    private List<Word> buildWordList(String[] wordStrList) {
+        List<Word> wordList = new ArrayList<>();
         for (String s : wordStrList) {
-            Input input = new Input(s, 1);
-            wordList.add(input);
+            Word word = new Word(s, 1);
+            wordList.add(word);
         }
         return wordList;
     }

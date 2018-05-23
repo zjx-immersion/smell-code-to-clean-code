@@ -1,11 +1,11 @@
 /**
  * Created by jxzhong on 2018/5/22.
  */
-public class Input {
+public class Word {
     private String value;
     private int count;
 
-    public Input(String w, int i) {
+    public Word(String w, int i) {
         this.value = w;
         this.count = i;
     }
