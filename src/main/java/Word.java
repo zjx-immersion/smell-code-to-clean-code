@@ -17,4 +17,10 @@ public class Word {
     public int getWordCount() {
         return this.count;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%s %d", getValue(), getWordCount());
+    }
+
 }

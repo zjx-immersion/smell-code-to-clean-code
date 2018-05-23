@@ -50,8 +50,4 @@ public class WordFrequencyGame {
                 .collect(Collectors.toList());
     }
 
-    private List<Word> buildWordList(String[] wordStrList) {
-        return Arrays.stream(wordStrList).map(s -> new Word(s, 1)).collect(Collectors.toList());
-    }
-
 }
