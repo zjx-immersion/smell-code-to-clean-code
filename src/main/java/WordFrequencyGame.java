@@ -1,6 +1,7 @@
 import java.util.*;
 import java.util.stream.Collectors;
 
+import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
 
 /**
@@ -37,7 +38,7 @@ public class WordFrequencyGame {
     }
 
     private List<Word> sortWords(List<Word> wordList) {
-        return wordList.stream().sorted(((w1, w2) -> w2.getWordCount() - w1.getWordCount()))
+        return wordList.stream().sorted(comparing(Word::getWordCount).reversed())
                 .collect(Collectors.toList());
     }
 
